@@ -3,7 +3,7 @@
 
 _pkgbasename=freetype2
 pkgname=lib32-$_pkgbasename-infinality-ultimate
-pkgver=2.7
+pkgver=2.7.1
 pkgrel=1
 pkgdesc="TrueType font rendering library with Infinality patches and custom settings by bohoomil (32-bit, infinality-bundle)."
 arch=(x86_64)
@@ -19,7 +19,7 @@ source=(http://download.savannah.gnu.org/releases/freetype/freetype-${pkgver}.ta
 	0001-Enable-table-validation-modules.patch
 	0002-Enable-subpixel-rendering.patch
 	0003-Enable-infinality-subpixel-hinting.patch)
-sha1sums=('f251029d5ab542a96dd4531605fe577185077560'
+sha1sums=('4d08a9a6567c6332d58e9a5f9a7e9e3fbce66789'
           '5ffd86fbf42aca32c6e4f0f4aa1e13c826f09a83'
           '2240060282082d1839239a0261e46734a28dfa4c'
           'c9626c80cc3f8621467c6236793176f8d1679720')
@@ -27,7 +27,7 @@ sha1sums=('f251029d5ab542a96dd4531605fe577185077560'
 prepare() {
 	# Rename source dir to allow building the demos
 	mv freetype-${pkgver} freetype2
-	
+
 	cd freetype2
 	patch -Np1 -i ../0001-Enable-table-validation-modules.patch
 	patch -Np1 -i ../0002-Enable-subpixel-rendering.patch
@@ -38,7 +38,7 @@ build() {
 	export CC="gcc -m32"
 	export CXX="g++ -m32"
 	export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-	
+
 	cd freetype2
 	./configure \
 		--prefix=/usr \
@@ -57,6 +57,6 @@ check() {
 package() {
 	cd freetype2
 	make DESTDIR="${pkgdir}" install
-	
+
 	rm -rf "${pkgdir}"/usr/{include,share,bin}
 }
